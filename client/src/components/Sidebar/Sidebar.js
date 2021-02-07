@@ -8,7 +8,11 @@ function Sidebar({ contacts, onlineUser }) {
                 { onlineUser }
             </h2>
             <div className='contacts'>
-
+                { contacts.map( contact =>
+                    (
+                        <Contact key={ contact } contact={ contact } />
+                    )
+                )}
             </div>
         </div>
     )

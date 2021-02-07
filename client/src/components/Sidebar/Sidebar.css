@@ -4,10 +4,24 @@
     border-right: 2px solid var(--secondary-color);
     background-color: var(--secondary-color);
     width: 20%;
+    color: #eee;
 }
 
 .sidebar .username
 {
-    margin: 2rem;
+    padding: 2rem;
+    margin: 0;
     text-align: center;
+    background-color: var(--active-color);
+}
+
+.sidebar .contacts .contact
+{
+    padding: 1rem;
+    margin: 0;
+}
+
+.sidebar .contacts .contact:hover
+{
+    background-color: var(--active-color);
 }
