@@ -1,0 +1,12 @@
+
+.sidebar
+{
+    border-right: 2px solid var(--secondary-color);
+    background-color: var(--secondary-color);
+    width: 20%;
+}
+
+.sidebar .username
+{
+    margin: 2rem;
+}
