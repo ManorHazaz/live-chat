@@ -2,15 +2,19 @@ import './App.css';
 import { Login } from './components/Login';
 import { Dashboard } from './components/Dashboard';
 import { useState } from 'react';
+import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
-	const [ contacts, setContacts ] = useState();
+	const [ contacts, setContacts ] = useLocalStorage('contacts', []);
 	const [ onlineUser, setOnlineUser ] = useState();
 
 	function loginUser( username )
 	{
-		setContacts({ ...contacts, username: username });
 		setOnlineUser( username );
+		if( !contacts.includes( username ) )
+		{
+			setContacts( prevContacts => [ ...prevContacts, username ] );
+		}
 	}
 
 	return (
