@@ -1,0 +1,30 @@
+
+.conversation
+{
+    display: grid;
+    grid-template-rows: 10% 80% 10%;
+    width: 100%;
+}
+
+.conversation .title
+{
+    color: #eee;
+    padding-left: 1rem;
+}
+
+.conversation .title, .conversation .add-messege
+{
+    background-color: var(--secondary-color);
+}
+
+.conversation .add-messege
+{
+    display: grid;
+    grid-template-columns: 80% 20%;
+}
+
+.conversation .add-messege .text-input, .conversation .add-messege .btn
+{
+    margin: 0;
+    width: 100%;
+}
