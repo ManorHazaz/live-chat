@@ -1,10 +1,10 @@
 import { Sidebar } from '../Sidebar'
 import './Dashboard.css'
 
-function Dashboard() {
+function Dashboard({ contacts, onlineUser }) {
     return (
         <div className='dashboard'>
-            <Sidebar />
+            <Sidebar onlineUser={ onlineUser } contacts={contacts} />
             
         </div>
     )

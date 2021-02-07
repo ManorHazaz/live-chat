@@ -1,10 +1,15 @@
+import Contact from './components/Contact'
 import './Sidebar.css'
 
-function Sidebar() {
+function Sidebar({ contacts, onlineUser }) {
     return (
         <div className='sidebar'>
-            <div className='username'> username: 'defult' </div>
-            
+            <h2 className='username'>
+                { onlineUser }
+            </h2>
+            <div className='contacts'>
+
+            </div>
         </div>
     )
 }
