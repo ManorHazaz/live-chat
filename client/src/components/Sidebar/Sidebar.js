@@ -1,11 +1,11 @@
 import Contact from './components/Contact'
 import './Sidebar.css'
 
-function Sidebar({ contacts, onlineUser }) {
+function Sidebar({ onlineContact, contacts, createConversation }) {
     return (
         <div className='sidebar'>
             <h2 className='username'>
-                { onlineUser }
+                { console.log(onlineContact) }
             </h2>
             <div className='contacts'>
                 { contacts.map( contact =>
