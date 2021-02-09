@@ -16,9 +16,11 @@ function Conversation({ onlineContact, contacts, activeConversation, addMessage 
         return activeConversation.participents[0];
     }
 
-    function sendMessage()
+    function sendMessage( e )
     {
-        addMessage( activeConversation, newMessageContentRef.current.value );
+        e.preventDefault();
+
+        addMessage( activeConversation.id , newMessageContentRef.current.value );
         newMessageContentRef.current.value = '';
     }
 
@@ -29,19 +31,18 @@ function Conversation({ onlineContact, contacts, activeConversation, addMessage 
                 <h2> { conversationName() } </h2>
             </div>
             <div className='messages'>
-                {/* { messages.map(( message, index ) =>
+                { activeConversation.messages.map(( message, index ) =>
                     (
-                        message.from === onlineUser & message.to === contactConversation
+                        message.from === onlineContact.id
                         ? <Message key={ index } type={'sent'} message={ message } />
-                        : message.from === contactConversation & message.to === onlineUser
-                        ? <Message key={ index } type={'received'} message={ message } />
-                        : ''
+                        : <Message key={ index } type={'received'} message={ message } />
                     )
-                )} */}
+                )}
+                { console.log( activeConversation ) }
             </div>
             <div className='add-message'>
                 <input type='text' ref={ newMessageContentRef } className='text-input' placeholder='new message'/>
-                <input type='submit' className='btn' value='Send' onClick={ () => sendMessage() }/>
+                <input type='submit' className='btn' value='Send' onClick={ (e) => sendMessage( e ) }/>
             </div>
             
         </div>

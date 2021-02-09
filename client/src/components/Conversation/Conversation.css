@@ -28,3 +28,21 @@
     margin: 0;
     width: 100%;
 }
+
+.conversation .messages .message
+{
+    width: 70%;
+    padding: 0.5rem;
+    margin: 1rem;
+    border-radius: 1rem;
+}
+
+.conversation .messages .sent
+{
+    background-color: var(--primary-color);
+}
+
+.conversation .messages .received
+{
+    background-color: var(--active-color);
+}

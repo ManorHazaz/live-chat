@@ -35,7 +35,7 @@ function Contacts({ onlineContact, contacts, conversations, setActiveConversatio
             { contacts.map( contact =>
                 (
                     contact.id !== onlineContact.id &&
-                    <div className='contact' onClick={ () => activeateConversation( contact.id ) } >
+                    <div key={ contact.id } className='contact' onClick={ () => activeateConversation( contact.id ) } >
                         { contact.contactName }
                     </div>
                 )

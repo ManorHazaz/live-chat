@@ -46,12 +46,13 @@ function App() {
 	// add message to conversation
 	function addMessage( conversation, content )
 	{
-		const newMessage = { from: onlineContact, content: content }
+
+		const newMessage = [{ from: onlineContact.id, content: content }];
 		setConversations(( prev ) =>
 			prev.map(({ id, messages, ...rest }) => 
 			({
 				...rest, id,
-				messages: id == conversation ? ([ ...messages ,...newMessage ]) : messages
+				messages: id == conversation ? ([ ...messages , ...newMessage ]) : messages
 			}))
 		);
 	}
