@@ -1,6 +1,7 @@
 
 .sidebar
 {
+    position: relative;
     border-right: 2px solid var(--secondary-color);
     background-color: var(--secondary-color);
     width: 20%;
@@ -24,4 +25,13 @@
 .sidebar .contacts .contact:hover
 {
     background-color: var(--active-color);
+}
+
+.sidebar .toggle-add-conversation
+{
+    position: fixed;
+    top: 21%;
+    left: 20%;
+    font-size: 2rem;
+    transform: translate(-50%, -50%);
 }

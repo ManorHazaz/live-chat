@@ -31,14 +31,15 @@ function App() {
 			const generatedId = generateId();
 			const newContact = { id: generatedId, contactName: contactname };
 			setContacts([ ...contacts, newContact ]);
-			setOnlineContact( generatedId );
+			setOnlineContact( newContact );
 		}
 	}
 
 	// create new conversation
-	function createConversation( id, name )
+	function createNewConversation( id )
 	{
-		const newConversation = { id: generateId(), name: name , participents: { onlineContact, id }, messages: [] }
+		const onlineId = onlineContact.id;
+		const newConversation = { id: generateId(), participents: { onlineId , id }, messages: [] }
 		setConversations([ ...conversations, newConversation ]);
 	}
 	
@@ -63,7 +64,7 @@ function App() {
 				onlineContact={ onlineContact } 
 				contacts={ contacts } 
 				conversations={ conversations } 
-				createConversation={ createConversation } 
+				setConversations={ setConversations } 
 				addMessage={ addMessage } 
 			/>
 			}

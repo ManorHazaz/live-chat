@@ -3,7 +3,7 @@ import { Conversation } from '../Conversation'
 import { Sidebar } from '../Sidebar'
 import './Dashboard.css'
 
-function Dashboard({ onlineContact, contacts, conversations, createConversation, addMessage }) {
+function Dashboard({ onlineContact, contacts, conversations, setConversations, addMessage }) {
 
     const [ activeConversation, setActiveConversation ] = useState();
 
@@ -20,18 +20,20 @@ function Dashboard({ onlineContact, contacts, conversations, createConversation,
             <Sidebar 
                 onlineContact={ onlineContact } 
                 contacts={ contacts } 
-                createConversation={ createConversation } 
+                conversations = { conversations }
+                setActiveConversation={ setActiveConversation }
+                setConversations={ setConversations }
             />
             
             { activeConversation != null
                 ? <Conversation 
-                    onlineContact={ onlineContact }  
-                    conversations={ conversations } 
+                    onlineContact={ onlineContact }
+                    contacts={ contacts }
                     activeConversation={ activeConversation } 
                     addMessage={ addMessage } 
                 />
                 : <div>
-                    <h1> There are no conversations </h1>
+                    <h1> Invite some friends to talk.. </h1>
                 </div>
             }
         </div>

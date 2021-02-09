@@ -1,19 +1,22 @@
-import Contact from './components/Contact'
+import { useState } from 'react'
+import Contacts from './components/Contacts';
 import './Sidebar.css'
 
-function Sidebar({ onlineContact, contacts, createConversation }) {
+function Sidebar({ onlineContact, contacts, conversations, setActiveConversation, setConversations }) {
+
+
     return (
         <div className='sidebar'>
             <h2 className='username'>
-                { console.log(onlineContact) }
+                { onlineContact.contactName }
             </h2>
-            <div className='contacts'>
-                { contacts.map( contact =>
-                    (
-                        <Contact key={ contact } contact={ contact } />
-                    )
-                )}
-            </div>
+            <Contacts
+                onlineContact={ onlineContact }
+                contacts={ contacts } 
+                onversations={ conversations }
+                setActiveConversation={ setActiveConversation }
+                setConversations={ setConversations }
+            />
         </div>
     )
 }
