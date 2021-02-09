@@ -11,10 +11,8 @@ function Contacts({ onlineContact, contacts, conversations, setActiveConversatio
         if( conversations )
         {
             conversations.forEach( conversation => {
-                console.log( conversation.participents )
                 if( conversation.participents.includes( onlineContact.id ) && conversation.participents.includes( contactId ) )
                 {
-                    console.log('in')
                     setActiveConversation( conversation );
                     found = true;
                 }			

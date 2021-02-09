@@ -34,14 +34,6 @@ function App() {
 			setOnlineContact( newContact );
 		}
 	}
-
-	// create new conversation
-	function createNewConversation( id )
-	{
-		const onlineId = onlineContact.id;
-		const newConversation = { id: generateId(), participents: { onlineId , id }, messages: [] }
-		setConversations([ ...conversations, newConversation ]);
-	}
 	
 	// add message to conversation
 	function addMessage( conversation, content )

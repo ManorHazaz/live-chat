@@ -7,13 +7,21 @@ function Conversation({ onlineContact, contacts, activeConversation, addMessage 
 
     const newMessageContentRef = useRef();
 
-    function conversationName()
+    function conversationTitle()
     {
+        var id;
+        
         if( activeConversation.participents[0] === onlineContact.id )
         {
-            return activeConversation.participents[1];
+            id = activeConversation.participents[1];
         }
-        return activeConversation.participents[0];
+        else
+        {
+            id = activeConversation.participents[0];
+        }
+
+        const  index = contacts.findIndex( contact => contact.id === id );
+        return contacts[index].contactName;
     }
 
     function sendMessage( e )
@@ -28,7 +36,7 @@ function Conversation({ onlineContact, contacts, activeConversation, addMessage 
         <div className='conversation'>
 
             <div className='title'>
-                <h2> { conversationName() } </h2>
+                <h2> { conversationTitle() } </h2>
             </div>
             <div className='messages'>
                 { activeConversation.messages.map(( message, index ) =>
@@ -38,7 +46,6 @@ function Conversation({ onlineContact, contacts, activeConversation, addMessage 
                         : <Message key={ index } type={'received'} message={ message } />
                     )
                 )}
-                { console.log( activeConversation ) }
             </div>
             <div className='add-message'>
                 <input type='text' ref={ newMessageContentRef } className='text-input' placeholder='new message'/>
