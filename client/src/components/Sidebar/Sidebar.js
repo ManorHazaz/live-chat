@@ -1,22 +1,19 @@
-import { useState } from 'react'
 import Contacts from './components/Contacts';
+
+import { useOnlineContact } from '../../Contexts/OnlineContactProvider';
+
 import './Sidebar.css'
 
-function Sidebar({ onlineContact, contacts, conversations, setActiveConversation, setConversations }) {
+function Sidebar() {
 
+    const { onlineContact } = useOnlineContact();
 
     return (
         <div className='sidebar'>
             <h2 className='username'>
                 { onlineContact.contactName }
             </h2>
-            <Contacts
-                onlineContact={ onlineContact }
-                contacts={ contacts } 
-                conversations={ conversations }
-                setActiveConversation={ setActiveConversation }
-                setConversations={ setConversations }
-            />
+            <Contacts />
         </div>
     )
 }

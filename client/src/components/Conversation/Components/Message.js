@@ -1,4 +1,3 @@
-
 function Message({ message, type }) {
     return (
         <div className={`message ${type}`}>

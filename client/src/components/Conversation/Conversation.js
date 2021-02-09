@@ -3,7 +3,17 @@ import './Conversation.css';
 import { useRef } from 'react';
 import Message from './Components/Message';
 
-function Conversation({ onlineContact, contacts, activeConversation, addMessage }) {
+import { useContacts } from '../../Contexts/ContactsProvider';
+import { useOnlineContact } from '../../Contexts/OnlineContactProvider';
+import { useConversations } from '../../Contexts/ConversationsProvider';
+import { useActiveConversation } from '../../Contexts/ActiveConversationProvider';
+
+function Conversation() {
+
+    const { contacts } = useContacts();
+    const { onlineContact } = useOnlineContact();
+    const { addMessage } = useConversations();
+    const { activeConversation } = useActiveConversation();
 
     const newMessageContentRef = useRef();
 
@@ -24,11 +34,9 @@ function Conversation({ onlineContact, contacts, activeConversation, addMessage 
         return contacts[index].contactName;
     }
 
-    function sendMessage( e )
+    function sendMessage()
     {
-        e.preventDefault();
-
-        addMessage( activeConversation.id , newMessageContentRef.current.value );
+        addMessage( onlineContact.id, activeConversation.id , newMessageContentRef.current.value );
         newMessageContentRef.current.value = '';
     }
 
@@ -49,7 +57,7 @@ function Conversation({ onlineContact, contacts, activeConversation, addMessage 
             </div>
             <div className='add-message'>
                 <input type='text' ref={ newMessageContentRef } className='text-input' placeholder='new message'/>
-                <input type='submit' className='btn' value='Send' onClick={ (e) => sendMessage( e ) }/>
+                <input type='submit' className='btn' value='Send' onClick={ () => sendMessage() }/>
             </div>
             
         </div>

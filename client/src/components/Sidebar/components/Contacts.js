@@ -1,8 +1,18 @@
 import React from 'react'
 
+import { useContacts } from '../../../Contexts/ContactsProvider';
+import { useOnlineContact } from '../../../Contexts/OnlineContactProvider';
+import { useConversations } from '../../../Contexts/ConversationsProvider';
+import { useActiveConversation } from '../../../Contexts/ActiveConversationProvider';
+
 import { v4 as generateId } from 'uuid';
 
-function Contacts({ onlineContact, contacts, conversations, setActiveConversation, setConversations }) {
+function Contacts() {
+
+    const { contacts } = useContacts();
+    const { onlineContact } = useOnlineContact();
+    const { conversations, createConversation } = useConversations();
+    const { setActiveConversation } = useActiveConversation();
 
     function activeateConversation( contactId )
     {
@@ -18,15 +28,11 @@ function Contacts({ onlineContact, contacts, conversations, setActiveConversatio
                 }			
             });
         }
-        
-
 		// TODO change this **** if
 		if( !found )
 		{
             const newConversation = { id: generateId(), participents: [ onlineContact.id , contactId ], messages: [] };
-            setConversations(prevConversations => {
-                return [...prevConversations, newConversation]
-            });
+            createConversation( newConversation );
             setActiveConversation( newConversation );
 		}
     }
