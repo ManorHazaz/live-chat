@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 const PREFIX = 'live-chat-';
 
 // custom hook - save state in local storage
-
 function useLocalStorage( key, initialValue ) {
     
     const prefixedKey = PREFIX + key;
@@ -22,15 +21,12 @@ function useLocalStorage( key, initialValue ) {
         {
             return initialValue;
         }
-
     });
 
     useEffect(() => {
-
         localStorage.setItem( prefixedKey, JSON.stringify( value ) )
     }, [ prefixedKey, value ]);
 
     return [ value, setValue ]
 }
-
 export default useLocalStorage
