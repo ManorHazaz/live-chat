@@ -12,37 +12,47 @@
     padding-left: 1rem;
 }
 
-.conversation .title, .conversation .add-messege
+.conversation .title, .conversation .add-message
 {
     background-color: var(--secondary-color);
 }
 
-.conversation .add-messege
+.conversation .add-message
 {
     display: grid;
     grid-template-columns: 80% 20%;
 }
 
-.conversation .add-messege .text-input, .conversation .add-messege .btn
+.conversation .add-message .text-input, .conversation .add-message .btn
 {
     margin: 0;
     width: 100%;
 }
 
+.conversation .messages
+{
+    display: flex;
+    flex-direction: column;
+    color: #eee;
+}
+
 .conversation .messages .message
 {
-    width: 70%;
+    max-width: 70%;
     padding: 0.5rem;
-    margin: 1rem;
+    margin: 0.5rem;
     border-radius: 1rem;
+    word-wrap: break-word
 }
 
 .conversation .messages .sent
 {
     background-color: var(--primary-color);
+    align-self: flex-start;
 }
 
 .conversation .messages .received
 {
     background-color: var(--active-color);
+    align-self: flex-end;
 }
