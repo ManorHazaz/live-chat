@@ -13,7 +13,7 @@ function Sidebar({ onlineContact, contacts, conversations, setActiveConversation
             <Contacts
                 onlineContact={ onlineContact }
                 contacts={ contacts } 
-                onversations={ conversations }
+                conversations={ conversations }
                 setActiveConversation={ setActiveConversation }
                 setConversations={ setConversations }
             />

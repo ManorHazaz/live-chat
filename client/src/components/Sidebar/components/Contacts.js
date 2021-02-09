@@ -8,16 +8,19 @@ function Contacts({ onlineContact, contacts, conversations, setActiveConversatio
     {
         var found = false;
 		// check if contact exist
-        if( conversations != null )
+        if( conversations )
         {
-            conversations.map( conversation => {
+            conversations.forEach( conversation => {
+                console.log( conversation.participents )
                 if( conversation.participents.includes( onlineContact.id ) && conversation.participents.includes( contactId ) )
                 {
+                    console.log('in')
                     setActiveConversation( conversation );
                     found = true;
                 }			
             });
         }
+        
 
 		// TODO change this **** if
 		if( !found )
