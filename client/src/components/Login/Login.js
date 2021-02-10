@@ -14,26 +14,19 @@ function Login() {
 
     const contactRef = useRef();
 
-    // login contact and add to contacts if not exist
+    // login contact and create if not exist
 	function loginContact()
 	{
         const contactname = contactRef.current.value;
-		var found = false;
+		const contact = contacts.find( contact => contact.contactName === contactname );
 
-		// check if contact exist
-		contacts.forEach( contact => {
-			if( contact.contactName === contactname )
-			{
-				setOnlineContact( contact );
-				found = true;
-			}			
-		});
-
-		// TODO change this **** if
-		if( !found )
+		if( contact )
 		{
-            const generatedId = generateId();
-            const newContact = { id: generatedId, contactName: contactname };
+			setOnlineContact( contact );
+		}
+		else
+		{
+			const newContact = { id: generateId(), contactName: contactname };
 			createContact( newContact )
 			setOnlineContact( newContact );
 		}
