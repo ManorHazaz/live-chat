@@ -14,22 +14,15 @@ function Contacts() {
     const { conversations, createConversation } = useConversations();
     const { setActiveConversation } = useActiveConversation();
 
-    function activeateConversation( contactId )
+    function activateConversation( contactId )
     {
-        var found = false;
-		// check if contact exist
-        if( conversations )
-        {
-            conversations.forEach( conversation => {
-                if( conversation.participents.includes( onlineContact.id ) && conversation.participents.includes( contactId ) )
-                {
-                    setActiveConversation( conversation );
-                    found = true;
-                }			
-            });
-        }
-		// TODO change this **** if
-		if( !found )
+		const conversation = conversations.find( conversation => conversation.participents.includes( onlineContact.id ) && conversation.participents.includes( contactId ) );
+
+		if( conversation )
+		{
+            setActiveConversation( conversation );
+		}
+		else
 		{
             const newConversation = { id: generateId(), participents: [ onlineContact.id , contactId ], messages: [] };
             createConversation( newConversation );
@@ -42,7 +35,7 @@ function Contacts() {
             { contacts.map( contact =>
                 (
                     contact.id !== onlineContact.id &&
-                    <div key={ contact.id } className='contact' onClick={ () => activeateConversation( contact.id ) } >
+                    <div key={ contact.id } className='contact' onClick={ () => activateConversation( contact.id ) } >
                         { contact.contactName }
                     </div>
                 )
