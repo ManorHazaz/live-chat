@@ -17,8 +17,10 @@ function Login() {
     const contactRef = useRef();
 
     // login contact and create if needed
-	function loginContact()
-	{
+	const loginContact = ( e ) => {
+
+		e.preventDefault();
+
         const contactname = contactRef.current.value;
 		const contact = contacts.find( contact => contact.contactName === contactname );
 
@@ -36,11 +38,12 @@ function Login() {
 	}
 
     return (
-        <div className='login'>
+        <form className='login' onSubmit={ loginContact } >
             <h1> Live Chat </h1>
-            <input type='text' ref={ contactRef } className='text-input' placeholder='Name'/>
-            <input type='submit' className='btn' value='Enter chat' onClick={ () => loginContact() }/>
-        </div>
+		
+			<input type='text' ref={ contactRef } className='text-input' placeholder='Name' />
+			<input type='submit' className='btn' value='Enter' />
+		</form>
     )
 }
 export default Login
