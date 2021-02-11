@@ -1,5 +1,4 @@
-import React ,{ useContext, useEffect, useCallback } from 'react'
-import useLocalStorage from '../hooks/useLocalStorage';
+import React ,{ useContext, useCallback, useState } from 'react';
 
 const ConversationsContext = React.createContext();
 
@@ -9,14 +8,14 @@ export function useConversations()
 }
 
 export function ConversationsProvider({ children }) {
-    const [ conversations, setConversations ] = useLocalStorage('conversations', []);
+    const [ conversations, setConversations ] = useState([]);
 
-    const addConversationToConversations = useCallback(( newConversation ) =>
+    function addConversationToConversations( newConversation )
     {
-        setConversations([...conversations, newConversation]);
-    },[ setConversations ]);
+        setConversations([...conversations, ...newConversation]);
+    }
 
-    const addMessageToConversation = useCallback(( conversationID, newMessage ) =>
+    function addMessageToConversation( conversationID, newMessage )
     {
         setConversations(( prev ) =>
             prev.map(({ id, messages, ...rest }) => 
@@ -25,7 +24,7 @@ export function ConversationsProvider({ children }) {
                 messages: id == conversationID ? ([ ...messages , ...newMessage ]) : messages
             }))
         );
-    },[  setConversations ]);
+    }
     
     // create new conversation
     function createConversation( newConversation )
