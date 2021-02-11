@@ -31,28 +31,16 @@ io.on('connection', socket =>
 
     socket.emit( 'get-contacts', contacts );
 
-    socket.on( 'get-conversations', () => {
-        socket.emit( 'receive-conversations',  conversations )
-    })
+    socket.emit( 'get-conversations',  conversations );
 
     socket.on( 'create-contact', ( contact ) => {
         contacts.push( contact );
-        socket.broadcast.emit('created-contact', ( contact ) )
-        console.log('add contact: ', contact )
-        // contacts.forEach( c => {
-        //     socket.broadcast.to( c ).emit('created-contact', ( contact ) )
-        //     console.log( 'broadcasting...' )
-        // })
-
-        
+        socket.broadcast.emit('created-contact', ( contact ) )  
     })
 
     socket.on( 'create-conversation', ( conversation ) => {
         conversations.push( conversation );
-        
-        conversation.participents.forEach(participent => {
-            socket.broadcast.to( participent ).emit('created-conversation', ( conversation ) )
-        })
+        socket.broadcast.emit('created-conversation', ( conversation ) )
     })
 
     socket.on( 'add-message', ( data ) => {
