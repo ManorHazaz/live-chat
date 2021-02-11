@@ -41,8 +41,10 @@ function Conversation() {
     }
 
     // create new message and send to server
-    function sendMessage()
-    {
+    const sendMessage = ( e ) => {
+
+		e.preventDefault();
+
         const newMessage = { from: onlineContact, content: newMessageContentRef.current.value };
         socket.emit( 'add-message', { conversationID: activeConversation.id ,newMessage: newMessage } );
         addMessage( activeConversation.id , newMessage );
@@ -63,10 +65,10 @@ function Conversation() {
                     )
                 )}
             </div>
-            <div className='add-message'>
+            <form className='add-message' onSubmit={ sendMessage } >
                 <input type='text' ref={ newMessageContentRef } className='text-input' placeholder='new message'/>
-                <input type='submit' className='btn' value='Send' onClick={ () => sendMessage() }/>
-            </div>
+                <input type='submit' className='btn' value='Send'/>
+            </form>
         </div>
     )
 }
