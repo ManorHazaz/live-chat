@@ -5,7 +5,7 @@ import { OnlineContactProvider } from './Contexts/OnlineContactProvider';
 
 import { ContactsProvider } from './Contexts/ContactsProvider';
 import { ConversationsProvider } from './Contexts/ConversationsProvider';
-import { ActiveConversationProvider } from './Contexts/ActiveConversationProvider';
+import { ActiveConversationIdProvider } from './Contexts/ActiveConversationIdProvider';
 import { SocketProvider } from './Contexts/SocketProvider';
 
 import App from './App';
@@ -16,9 +16,9 @@ ReactDOM.render(
 		<OnlineContactProvider>
 			<ContactsProvider>
 				<ConversationsProvider>
-					<ActiveConversationProvider>
+					<ActiveConversationIdProvider>
 						<App />
-					</ActiveConversationProvider>
+					</ActiveConversationIdProvider>
 				</ConversationsProvider>
 			</ContactsProvider>
 		</OnlineContactProvider>

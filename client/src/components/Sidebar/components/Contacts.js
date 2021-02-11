@@ -3,7 +3,7 @@ import React from 'react'
 import { useContacts } from '../../../Contexts/ContactsProvider';
 import { useOnlineContact } from '../../../Contexts/OnlineContactProvider';
 import { useConversations } from '../../../Contexts/ConversationsProvider';
-import { useActiveConversation } from '../../../Contexts/ActiveConversationProvider';
+import { useActiveConversationId } from '../../../Contexts/ActiveConversationIdProvider';
 import { useSocket } from '../../../Contexts/SocketProvider';
 
 import { v4 as generateId } from 'uuid';
@@ -13,7 +13,7 @@ function Contacts() {
     const { contacts } = useContacts();
     const { onlineContact } = useOnlineContact();
     const { conversations, createConversation } = useConversations();
-    const { setActiveConversation } = useActiveConversation();
+    const { setActiveConversationId } = useActiveConversationId();
     const { socket } = useSocket();
 
     function activateConversation( contactId )
@@ -22,14 +22,14 @@ function Contacts() {
 
 		if( conversation )
 		{
-            setActiveConversation( conversation );
+            setActiveConversationId( conversation.id );
 		}
 		else
 		{
             const newConversation = { id: generateId(), participents: [ onlineContact.id , contactId ], messages: [] };
             socket.emit( 'create-conversation', newConversation );
             createConversation( newConversation );
-            setActiveConversation( newConversation );
+            setActiveConversationId( newConversation.id );
 		}
     }
 

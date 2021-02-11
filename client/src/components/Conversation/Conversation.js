@@ -6,17 +6,22 @@ import Message from './Components/Message';
 import { useContacts } from '../../Contexts/ContactsProvider';
 import { useOnlineContact } from '../../Contexts/OnlineContactProvider';
 import { useConversations } from '../../Contexts/ConversationsProvider';
-import { useActiveConversation } from '../../Contexts/ActiveConversationProvider';
+import { useActiveConversationId } from '../../Contexts/ActiveConversationIdProvider';
+
+import { useSocket } from '../../Contexts/SocketProvider';
 
 function Conversation() {
 
     const { contacts } = useContacts();
     const { onlineContact } = useOnlineContact();
-    const { addMessage } = useConversations();
-    const { activeConversation } = useActiveConversation();
+    const { conversations, addMessage } = useConversations();
+    const { activeConversationId } = useActiveConversationId();
+
+    const { socket } = useSocket();
 
     const newMessageContentRef = useRef();
 
+    const activeConversation = conversations.find( conversation => conversation.id == activeConversationId  )
     function conversationTitle()
     {
         var id;
@@ -37,6 +42,7 @@ function Conversation() {
     function sendMessage()
     {
         const newMessage = { from: onlineContact, content: newMessageContentRef.current.value };
+        socket.emit( 'add-message', { conversationID: activeConversation.id ,newMessage: newMessage } );
         addMessage( activeConversation.id , newMessage );
         newMessageContentRef.current.value = '';
     }
@@ -50,7 +56,7 @@ function Conversation() {
             <div className='messages'>
                 { activeConversation.messages.map(( message, index ) =>
                     (
-                        message.from === onlineContact.id
+                        message.from.id === onlineContact.id
                         ? <Message key={ index } type={'sent'} message={ message } />
                         : <Message key={ index } type={'received'} message={ message } />
                     )

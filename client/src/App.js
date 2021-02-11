@@ -32,6 +32,11 @@ function App() {
 
 			socket.on('created-conversation', createConversation );
 
+			
+			socket.on('receive-message', (data) => {
+				addMessage( data.conversationID, data.newMessage );
+			})
+
 			// close connection on unmount
 			return () => {
 				socket.disconnect()

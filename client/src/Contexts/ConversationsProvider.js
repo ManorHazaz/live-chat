@@ -1,4 +1,4 @@
-import React ,{ useContext, useCallback, useState } from 'react';
+import React ,{ useContext, useState } from 'react';
 
 const ConversationsContext = React.createContext();
 
@@ -10,10 +10,6 @@ export function useConversations()
 export function ConversationsProvider({ children }) {
     const [ conversations, setConversations ] = useState([]);
 
-    function addMessageToConversation( conversationID, newMessage )
-    {
-    }
-    
     // create new conversation
     function createConversation( newConversation )
     {
@@ -24,15 +20,17 @@ export function ConversationsProvider({ children }) {
     }
 
     // add message to conversation
-    function addMessage( conversationID, newMessage )
+    function addMessage( conversationId, newMessage )
 	{
-        setConversations(( prevConversations ) =>
-            prevConversations.map(({ id, messages, ...rest }) => 
+        setConversations(( prev ) =>
+            prev.map(({ id, messages, ...rest }) => 
             ({
                 ...rest, id,
-                messages: id == conversationID ? ([ ...messages , newMessage ]) : messages
+                messages: id == conversationId ? [ ...messages, newMessage ] : messages
             }))
         );
+
+        console.log( conversations )
 	}
 
     return (

@@ -2,17 +2,17 @@ import { Conversation } from '../Conversation'
 import { Sidebar } from '../Sidebar'
 import './Dashboard.css'
 
-import { useActiveConversation } from '../../Contexts/ActiveConversationProvider';
+import { useActiveConversationId } from '../../Contexts/ActiveConversationIdProvider';
 
 function Dashboard() {
 
-    const { activeConversation } = useActiveConversation();
+    const { activeConversationId } = useActiveConversationId();
 
     return (
         <div className='dashboard'>
             <Sidebar />
             
-            { activeConversation
+            { activeConversationId
                 ? <Conversation />
                 : <div>
                     <h1> Invite some friends to talk.. </h1>
