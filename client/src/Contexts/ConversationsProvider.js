@@ -10,33 +10,29 @@ export function useConversations()
 export function ConversationsProvider({ children }) {
     const [ conversations, setConversations ] = useState([]);
 
-    function addConversationToConversations( newConversation )
-    {
-        setConversations([...conversations, ...newConversation]);
-    }
-
     function addMessageToConversation( conversationID, newMessage )
     {
-        setConversations(( prev ) =>
-            prev.map(({ id, messages, ...rest }) => 
-            ({
-                ...rest, id,
-                messages: id == conversationID ? ([ ...messages , ...newMessage ]) : messages
-            }))
-        );
     }
     
     // create new conversation
     function createConversation( newConversation )
     {
-        addConversationToConversations( newConversation );
+        setConversations(prevConversation => 
+        {
+            return [...prevConversation, newConversation]
+        });
     }
 
     // add message to conversation
-    function addMessage( onlineContact, conversationID, content )
+    function addMessage( conversationID, newMessage )
 	{
-		const newMessage = [{ from: onlineContact, content: content }];
-        addMessageToConversation( conversationID, newMessage );
+        setConversations(( prevConversations ) =>
+            prevConversations.map(({ id, messages, ...rest }) => 
+            ({
+                ...rest, id,
+                messages: id == conversationID ? ([ ...messages , newMessage ]) : messages
+            }))
+        );
 	}
 
     return (

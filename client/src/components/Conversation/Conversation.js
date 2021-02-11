@@ -36,8 +36,8 @@ function Conversation() {
 
     function sendMessage()
     {
-        const content = newMessageContentRef.current.value;
-        addMessage( onlineContact.id, activeConversation.id , content );
+        const newMessage = { from: onlineContact, content: newMessageContentRef.current.value };
+        addMessage( activeConversation.id , newMessage );
         newMessageContentRef.current.value = '';
     }
 
