@@ -3,6 +3,8 @@ import './Login.css';
 import { useContacts } from '../../Contexts/ContactsProvider';
 import { useOnlineContact } from '../../Contexts/OnlineContactProvider';
 
+import { useSocket } from '../../Contexts/SocketProvider';
+
 import { useRef } from 'react';
 
 import { v4 as generateId } from 'uuid';
@@ -11,6 +13,7 @@ function Login() {
 
     const { contacts, createContact } = useContacts();
     const { setOnlineContact } = useOnlineContact();
+	const { socket } = useSocket();
 
     const contactRef = useRef();
 
@@ -27,6 +30,7 @@ function Login() {
 		else
 		{
 			const newContact = { id: generateId(), contactName: contactname };
+			socket.emit( 'create-contact', newContact );
 			createContact( newContact )
 			setOnlineContact( newContact );
 		}
