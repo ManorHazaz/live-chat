@@ -44,19 +44,11 @@ io.on('connection', socket =>
     })
 
     socket.on( 'add-message', ( data ) => {
+        socket.broadcast.emit('receive-message', { conversationID: data.conversationID ,newMessage: data.newMessage } );
         conversations.map(({ id, messages, ...rest }) => 
         ({
             ...rest, id,
-            messages: id == data.conversationID ? ([ ...messages , data.newMessage ]) : messages
+            messages: id == data.conversationID ? messages.push(data.newMessage) : messages
         }));
-        console.log(data.newMessage);
-        const conversation = conversations.find( conversation => conversation.id === data.conversationID );
-        console.log(conversations);
-        if( conversation )
-        {
-            conversation.participents.forEach(participent => {
-                socket.broadcast.to(participent).emit('receive-message', ( conversation.id, data.newMessage ) )
-            })
-        }
     })
 })
