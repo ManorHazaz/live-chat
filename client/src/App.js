@@ -15,7 +15,7 @@ function App() {
 
 	const { onlineContact } = useOnlineContact();
 	const { contacts, setContacts, createContact } = useContacts();
-	const { conversations, setConversations, createConversation } = useConversations();
+	const { conversations, setConversations, createConversation, addMessage } = useConversations();
 	const { socket } = useSocket();
 
 		// join room & fetch messages on mount
@@ -28,13 +28,9 @@ function App() {
 
 			socket.on( 'get-conversations', ( conversations ) => {
 				setConversations( conversations );
-				console.log( 'conversations: ', conversations )
 			} );
 
-			socket.on('created-conversation', (data) =>  {
-				createConversation( data );
-				console.log( data )
-			});
+			socket.on('created-conversation', createConversation );
 
 			// close connection on unmount
 			return () => {
