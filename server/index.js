@@ -28,9 +28,8 @@ let conversations = [];
 
 io.on('connection', socket => 
 {
-    socket.on( 'get-contacts', () => {
-        socket.emit( 'receive-contacts', contacts )
-    })
+
+    socket.emit( 'get-contacts', contacts );
 
     socket.on( 'get-conversations', () => {
         socket.emit( 'receive-conversations',  conversations )
@@ -38,6 +37,14 @@ io.on('connection', socket =>
 
     socket.on( 'create-contact', ( contact ) => {
         contacts.push( contact );
+        socket.broadcast.emit('created-contact', ( contact ) )
+        console.log('add contact: ', contact )
+        // contacts.forEach( c => {
+        //     socket.broadcast.to( c ).emit('created-contact', ( contact ) )
+        //     console.log( 'broadcasting...' )
+        // })
+
+        
     })
 
     socket.on( 'create-conversation', ( conversation ) => {
