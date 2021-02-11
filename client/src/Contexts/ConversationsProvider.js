@@ -29,8 +29,6 @@ export function ConversationsProvider({ children }) {
                 messages: id == conversationId ? [ ...messages, newMessage ] : messages
             }))
         );
-
-        console.log( conversations )
 	}
 
     return (

@@ -1,13 +1,13 @@
 import './Conversation.css';
 
 import { useRef } from 'react';
+
 import Message from './Components/Message';
 
 import { useContacts } from '../../Contexts/ContactsProvider';
 import { useOnlineContact } from '../../Contexts/OnlineContactProvider';
 import { useConversations } from '../../Contexts/ConversationsProvider';
 import { useActiveConversationId } from '../../Contexts/ActiveConversationIdProvider';
-
 import { useSocket } from '../../Contexts/SocketProvider';
 
 function Conversation() {
@@ -16,12 +16,13 @@ function Conversation() {
     const { onlineContact } = useOnlineContact();
     const { conversations, addMessage } = useConversations();
     const { activeConversationId } = useActiveConversationId();
-
     const { socket } = useSocket();
 
     const newMessageContentRef = useRef();
 
     const activeConversation = conversations.find( conversation => conversation.id == activeConversationId  )
+
+    // get the title from participents in conversation
     function conversationTitle()
     {
         var id;
@@ -39,6 +40,7 @@ function Conversation() {
         return contacts[index].contactName;
     }
 
+    // create new message and send to server
     function sendMessage()
     {
         const newMessage = { from: onlineContact, content: newMessageContentRef.current.value };
@@ -49,7 +51,6 @@ function Conversation() {
 
     return (
         <div className='conversation'>
-
             <div className='title'>
                 <h2> { conversationTitle() } </h2>
             </div>
@@ -66,9 +67,7 @@ function Conversation() {
                 <input type='text' ref={ newMessageContentRef } className='text-input' placeholder='new message'/>
                 <input type='submit' className='btn' value='Send' onClick={ () => sendMessage() }/>
             </div>
-            
         </div>
     )
 }
-
 export default Conversation

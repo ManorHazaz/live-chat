@@ -1,6 +1,7 @@
-import { Conversation } from '../Conversation'
-import { Sidebar } from '../Sidebar'
-import './Dashboard.css'
+import './Dashboard.css';
+
+import { Conversation } from '../Conversation';
+import { Sidebar } from '../Sidebar';
 
 import { useActiveConversationId } from '../../Contexts/ActiveConversationIdProvider';
 
@@ -21,5 +22,4 @@ function Dashboard() {
         </div>
     )
 }
-
 export default Dashboard

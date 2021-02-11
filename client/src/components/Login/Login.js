@@ -1,13 +1,12 @@
 import './Login.css';
 
-import { useContacts } from '../../Contexts/ContactsProvider';
-import { useOnlineContact } from '../../Contexts/OnlineContactProvider';
-
-import { useSocket } from '../../Contexts/SocketProvider';
-
 import { useRef } from 'react';
 
 import { v4 as generateId } from 'uuid';
+
+import { useContacts } from '../../Contexts/ContactsProvider';
+import { useOnlineContact } from '../../Contexts/OnlineContactProvider';
+import { useSocket } from '../../Contexts/SocketProvider';
 
 function Login() {
 
@@ -17,7 +16,7 @@ function Login() {
 
     const contactRef = useRef();
 
-    // login contact and create if not exist
+    // login contact and create if needed
 	function loginContact()
 	{
         const contactname = contactRef.current.value;
@@ -44,5 +43,4 @@ function Login() {
         </div>
     )
 }
-
 export default Login

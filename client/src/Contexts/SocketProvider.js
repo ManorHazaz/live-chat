@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+
 import io from 'socket.io-client';
 
 const SocketContext = React.createContext();
@@ -16,5 +17,5 @@ export function SocketProvider({ children })
 		<SocketContext.Provider value={{ socket }}>
 			{ children }
 		</SocketContext.Provider>
-	);
+	)
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { OnlineContactProvider } from './Contexts/OnlineContactProvider';
-
 import { ContactsProvider } from './Contexts/ContactsProvider';
 import { ConversationsProvider } from './Contexts/ConversationsProvider';
 import { ActiveConversationIdProvider } from './Contexts/ActiveConversationIdProvider';

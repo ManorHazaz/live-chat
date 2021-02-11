@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
+
+import { v4 as generateId } from 'uuid';
 
 import { useContacts } from '../../../Contexts/ContactsProvider';
 import { useOnlineContact } from '../../../Contexts/OnlineContactProvider';
 import { useConversations } from '../../../Contexts/ConversationsProvider';
 import { useActiveConversationId } from '../../../Contexts/ActiveConversationIdProvider';
 import { useSocket } from '../../../Contexts/SocketProvider';
-
-import { v4 as generateId } from 'uuid';
 
 function Contacts() {
 
@@ -15,7 +15,8 @@ function Contacts() {
     const { conversations, createConversation } = useConversations();
     const { setActiveConversationId } = useActiveConversationId();
     const { socket } = useSocket();
-
+    
+    // set activeConversationId and create conversation if needed
     function activateConversation( contactId )
     {
 		const conversation = conversations.find( conversation => conversation.participents.includes( onlineContact.id ) && conversation.participents.includes( contactId ) );
@@ -46,5 +47,4 @@ function Contacts() {
         </div>
     )
 }
-
 export default Contacts

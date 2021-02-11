@@ -1,8 +1,8 @@
+import './Sidebar.css';
+
 import Contacts from './components/Contacts';
 
 import { useOnlineContact } from '../../Contexts/OnlineContactProvider';
-
-import './Sidebar.css'
 
 function Sidebar() {
 
@@ -17,5 +17,4 @@ function Sidebar() {
         </div>
     )
 }
-
 export default Sidebar
