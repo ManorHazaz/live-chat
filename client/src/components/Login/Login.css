@@ -10,9 +10,12 @@
     border-radius: 1rem;
     padding: 2rem;
     text-align: center;
+
+    justify-content: center;
 }
 
 .login h1
 {
     font-size: 3rem;
+    margin-top: 0;
 }

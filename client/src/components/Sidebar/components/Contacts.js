@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { v4 as generateId } from 'uuid';
 
@@ -13,8 +13,10 @@ function Contacts() {
     const { contacts } = useContacts();
     const { onlineContact } = useOnlineContact();
     const { conversations, createConversation } = useConversations();
-    const { setActiveConversationId } = useActiveConversationId();
+    const { activeConversationId, setActiveConversationId } = useActiveConversationId();
     const { socket } = useSocket();
+
+    const [ lastContactId, setLastContactId ] = useState(1);
     
     // set activeConversationId and create conversation if needed
     function activateConversation( contactId )
@@ -32,6 +34,8 @@ function Contacts() {
             createConversation( newConversation );
             setActiveConversationId( newConversation.id );
 		}
+
+        setLastContactId( contactId );
     }
 
     return (
@@ -39,7 +43,7 @@ function Contacts() {
             { contacts.map( contact =>
                 (
                     contact.id !== onlineContact.id &&
-                    <div key={ contact.id } className='contact' onClick={ () => activateConversation( contact.id ) } >
+                    <div key={ contact.id } className={`contact ${ contact.id == lastContactId ? 'active' :'' }`} onClick={ () => activateConversation( contact.id ) } >
                         { contact.contactName }
                     </div>
                 )

@@ -21,6 +21,13 @@ function Login() {
 
 		e.preventDefault();
 
+			// prevent empty messages
+			if( contactRef.current.value.trim() === '' ) 
+			{
+				contactRef.current.value = '';
+				return;
+			}
+
         const contactname = contactRef.current.value;
 		const contact = contacts.find( contact => contact.contactName === contactname );
 

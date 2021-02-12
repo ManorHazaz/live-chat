@@ -15,8 +15,10 @@ function Dashboard() {
             
             { activeConversationId
                 ? <Conversation />
-                : <div>
-                    <h1> Invite some friends to talk.. </h1>
+                : <div className='welcome-msg'>
+                    <h1> Welcome </h1>
+                    <h2> This is my kind of chat. </h2>
+                    <h2> Invite someone to talk and enjoy. </h2>
                 </div>
             }
         </div>

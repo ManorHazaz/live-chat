@@ -1,6 +1,6 @@
 import './Conversation.css';
 
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 import Message from './Components/Message';
 
@@ -19,8 +19,16 @@ function Conversation() {
     const { socket } = useSocket();
 
     const newMessageContentRef = useRef();
+    const lastMessageRef = useRef();
 
     const activeConversation = conversations.find( conversation => conversation.id == activeConversationId  )
+
+    useEffect(() => {
+        if( lastMessageRef.current )
+        {
+            lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+      });
 
     // get the title from participents in conversation
     function conversationTitle()
@@ -45,6 +53,13 @@ function Conversation() {
 
 		e.preventDefault();
 
+        // prevent empty messages
+        if( newMessageContentRef.current.value.trim() === '' ) 
+        {
+            newMessageContentRef.current.value = '';
+            return;
+        }
+
         const newMessage = { from: onlineContact, content: newMessageContentRef.current.value };
         socket.emit( 'add-message', { conversationID: activeConversation.id ,newMessage: newMessage } );
         addMessage( activeConversation.id , newMessage );
@@ -58,11 +73,13 @@ function Conversation() {
             </div>
             <div className='messages'>
                 { activeConversation.messages.map(( message, index ) =>
-                    (
-                        message.from.id === onlineContact.id
-                        ? <Message key={ index } type={'sent'} message={ message } />
-                        : <Message key={ index } type={'received'} message={ message } />
-                    )
+                    {
+                        const lastMessage = activeConversation.messages.length - 1 === index;
+
+                        return message.from.id === onlineContact.id
+                        ? <Message key={ index } reference={ lastMessage ? lastMessageRef : null } type={'sent'} message={ message } />
+                        : <Message key={ index } reference={ lastMessage ? lastMessageRef : null } type={'received'} message={ message } />
+                    }
                 )}
             </div>
             <form className='add-message' onSubmit={ sendMessage } >

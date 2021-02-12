@@ -1,7 +1,7 @@
 
-function Message({ message, type }) {
+function Message({ message, type, reference }) {
     return (
-        <div className={ `message ${ type }` }>
+        <div ref={ reference } className={ `message ${ type }` }>
             { message.content }
         </div>
     )

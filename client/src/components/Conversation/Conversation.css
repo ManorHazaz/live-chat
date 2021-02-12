@@ -10,6 +10,13 @@
 {
     color: #eee;
     padding-left: 1rem;
+    align-items: center;
+    display: flex;
+}
+
+.conversation .title h2
+{
+    margin: 0;
 }
 
 .conversation .title, .conversation .add-message
@@ -34,12 +41,13 @@
     display: flex;
     flex-direction: column;
     color: #eee;
+    overflow: auto;
 }
 
 .conversation .messages .message
 {
     max-width: 70vw;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     margin: 0.5rem;
     border-radius: 1rem;
     word-wrap: break-word
