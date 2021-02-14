@@ -28,27 +28,44 @@ let conversations = [];
 
 io.on('connection', socket => 
 {
-
     socket.emit( 'get-contacts', contacts );
 
     socket.emit( 'get-conversations',  conversations );
 
     socket.on( 'create-contact', ( contact ) => {
         contacts.push( contact );
-        socket.broadcast.emit('created-contact', ( contact ) )  
-    })
+        socket.broadcast.emit('created-contact', ( contact ));  
+    });
+
+    socket.on( 'login-contact', ( contactId ) => {
+        socket.broadcast.emit('loggedin-contact', contactId );
+        contacts = contacts.map(({ id, isOnline, ...rest }) => 
+        ({
+            ...rest, id,
+            isOnline: id == contactId ? true : isOnline
+        }));
+    });
+
+    socket.on( 'logout-contact', ( contactId ) => {
+        socket.broadcast.emit('loggedout-contact', contactId );
+        contacts = contacts.map(({ id, isOnline, ...rest }) => 
+        ({
+            ...rest, id,
+            isOnline: id == contactId ? false : isOnline
+        }));
+    });
 
     socket.on( 'create-conversation', ( conversation ) => {
         conversations.push( conversation );
-        socket.broadcast.emit('created-conversation', ( conversation ) )
-    })
+        socket.broadcast.emit('created-conversation', ( conversation ));
+    });
 
     socket.on( 'add-message', ( data ) => {
-        socket.broadcast.emit('receive-message', { conversationID: data.conversationID ,newMessage: data.newMessage } );
+        socket.broadcast.emit('receive-message', { conversationID: data.conversationID ,newMessage: data.newMessage });
         conversations.map(({ id, messages, ...rest }) => 
         ({
             ...rest, id,
             messages: id == data.conversationID ? messages.push(data.newMessage) : messages
         }));
-    })
-})
+    });
+});
