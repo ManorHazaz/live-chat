@@ -10,12 +10,21 @@ import { useContacts } from './Contexts/ContactsProvider';
 import { useConversations } from './Contexts/ConversationsProvider';
 import { useSocket } from './Contexts/SocketProvider';
 
+
 function App() {
 
 	const { onlineContact } = useOnlineContact();
-	const { setContacts, createContact } = useContacts();
+	const { setContacts, createContact, loginContact, logoutContact } = useContacts();
 	const { setConversations, createConversation, addMessage } = useConversations();
 	const { socket } = useSocket();
+	
+	if( onlineContact )
+	{
+		window.addEventListener( 'visibilitychange', () => {
+			socket.emit( 'logout-contact', onlineContact.id );
+			logoutContact( onlineContact.id );
+		});
+	}
 
 		useEffect( () => {
 
@@ -36,8 +45,18 @@ function App() {
 			socket.on('created-conversation', createConversation );
 
 			// listen and get new message
-			socket.on('receive-message', (data) => {
+			socket.on('receive-message', ( data ) => {
 				addMessage( data.conversationID, data.newMessage );
+			})
+
+			// listen and get new message
+			socket.on('loggedin-contact', ( contacId ) => {
+				loginContact( contacId );
+			})
+
+			// listen and get new message
+			socket.on('loggedout-contact', ( contacId ) => {
+				logoutContact( contacId );
 			})
 
 			// close connection on unmount

@@ -10,14 +10,14 @@ import { useSocket } from '../../Contexts/SocketProvider';
 
 function Login() {
 
-    const { contacts, createContact } = useContacts();
+    const { contacts, createContact, loginContact } = useContacts();
     const { setOnlineContact } = useOnlineContact();
 	const { socket } = useSocket();
 
     const contactRef = useRef();
 
     // login contact and create if needed
-	const loginContact = ( e ) => {
+	const login = ( e ) => {
 
 		e.preventDefault();
 
@@ -28,16 +28,18 @@ function Login() {
 				return;
 			}
 
-        const contactname = contactRef.current.value;
+		const contactname = contactRef.current.value;
 		const contact = contacts.find( contact => contact.contactName === contactname );
-
+		
 		if( contact )
 		{
 			setOnlineContact( contact );
+			socket.emit( 'login-contact', contact.id );
+			loginContact( contact.id );
 		}
 		else
 		{
-			const newContact = { id: generateId(), contactName: contactname };
+			const newContact = { id: generateId(), contactName: contactname, isOnline: true };
 			socket.emit( 'create-contact', newContact );
 			createContact( newContact )
 			setOnlineContact( newContact );
@@ -45,7 +47,7 @@ function Login() {
 	}
 
     return (
-        <form className='login' onSubmit={ loginContact } >
+        <form className='login' onSubmit={ login } >
             <h1> Live Chat </h1>
 		
 			<input type='text' ref={ contactRef } className='text-input' placeholder='Name' />

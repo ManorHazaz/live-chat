@@ -17,10 +17,32 @@ export function ContactsProvider({ children }) {
             return [...prevContacts, newContact]
         });
     }
+
+    function logoutContact( contactId )
+    {
+		setContacts((prev) =>
+			prev.map(({ id, isOnline, ...rest }) => 
+			({
+				...rest, id,
+				isOnline: id === contactId ? false :isOnline
+			}))
+		)
+    }
+
+    function loginContact( contactId )
+    {
+		setContacts((prev) =>
+			prev.map(({ id, isOnline, ...rest }) => 
+			({
+				...rest, id,
+				isOnline: id === contactId ? true :isOnline
+			}))
+		)
+    }
     
 
     return (
-        <ContactsContext.Provider value={{ contacts, setContacts, createContact }}>
+        <ContactsContext.Provider value={{ contacts, setContacts, createContact, logoutContact, loginContact }}>
             { children }
         </ContactsContext.Provider>
     )

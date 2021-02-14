@@ -45,6 +45,7 @@ function Contacts() {
                     contact.id !== onlineContact.id &&
                     <div key={ contact.id } className={`contact ${ contact.id == lastContactId ? 'active' :'' }`} onClick={ () => activateConversation( contact.id ) } >
                         { contact.contactName }
+                        <span className={`online online-${contact.isOnline}`} ></span>
                     </div>
                 )
             )}
