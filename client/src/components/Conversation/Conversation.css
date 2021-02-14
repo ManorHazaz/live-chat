@@ -50,7 +50,21 @@
     padding: 0.5rem 1rem;
     margin: 0.5rem;
     border-radius: 1rem;
-    word-wrap: break-word
+    word-wrap: break-word;
+    direction: ltr;
+}
+
+.conversation .messages .message .time::before
+{
+    content: '';
+    width: 2.5rem;
+    display: inline-block;
+}
+
+.conversation .messages .message .time
+{
+    font-size: 9px;
+    color: darkgray;
 }
 
 .conversation .messages .sent

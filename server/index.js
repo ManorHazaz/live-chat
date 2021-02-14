@@ -19,7 +19,7 @@ const server = app.listen( PORT, () => {
 // attach the socket.io server to the express server
 io.listen( server );
 
-// handle users data
+// handle contacts data
 let contacts = [];
 
 // handle rooms data

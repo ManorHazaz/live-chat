@@ -60,7 +60,7 @@ function Conversation() {
             return;
         }
 
-        const newMessage = { from: onlineContact, content: newMessageContentRef.current.value };
+        const newMessage = { from: onlineContact, content: newMessageContentRef.current.value, time: Date.now() };
         socket.emit( 'add-message', { conversationID: activeConversation.id ,newMessage: newMessage } );
         addMessage( activeConversation.id , newMessage );
         newMessageContentRef.current.value = '';

@@ -24,18 +24,18 @@ function App() {
 				setContacts( contacts );
 			} );
 
-			// listen and get new contact from server 
+			// listen and get new contact
 			socket.on('created-contact', createContact );
 
-			// get conversations from server
+			// listen and get conversations
 			socket.on( 'get-conversations', ( conversations ) => {
 				setConversations( conversations );
 			} );
 
-			// listen and get new conversation from server 
+			// listen and get new conversation
 			socket.on('created-conversation', createConversation );
 
-			// listen and get new message from server 
+			// listen and get new message
 			socket.on('receive-message', (data) => {
 				addMessage( data.conversationID, data.newMessage );
 			})
