@@ -21,14 +21,15 @@ function Conversation() {
     const newMessageContentRef = useRef();
     const lastMessageRef = useRef();
 
-    const activeConversation = conversations.find( conversation => conversation.id == activeConversationId  )
+    const activeConversation = conversations.find( conversation => conversation.id == activeConversationId );
 
-    useEffect(() => {
+    useEffect(() => 
+    {
         if( lastMessageRef.current )
         {
             lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
         }
-      });
+    });
 
     // get the title from participents in conversation
     function conversationTitle()
@@ -45,12 +46,15 @@ function Conversation() {
         }
 
         const  index = contacts.findIndex( contact => contact.id === id );
-        return contacts[index].contactName;
+        return <div className='title'>
+                <h2>{ contacts[index].contactName }</h2>
+                <span> { contacts[index].isOnline? 'Online': 'Offline' } </span>
+                </div>;
     }
 
     // create new message and send to server
-    const sendMessage = ( e ) => {
-
+    const sendMessage = ( e ) => 
+    {
 		e.preventDefault();
 
         // prevent empty messages
@@ -68,9 +72,7 @@ function Conversation() {
 
     return (
         <div className='conversation'>
-            <div className='title'>
-                <h2> { conversationTitle() } </h2>
-            </div>
+            { conversationTitle() }
             <div className='messages'>
                 { activeConversation.messages.map(( message, index ) =>
                     {
