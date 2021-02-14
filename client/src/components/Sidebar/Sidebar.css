@@ -5,6 +5,7 @@
     border-right: 2px solid var(--secondary-color);
     background-color: var(--secondary-color);
     width: 25%;
+    min-width: 200px;
     color: #eee;
     overflow: auto;
 }
@@ -56,4 +57,15 @@
     left: 20%;
     font-size: 2rem;
     transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 600px) 
+{
+    .sidebar
+    {
+        width: 100vw;
+        height: 100vh;
+        display: block;
+        max-width: none;
+    }
 }

@@ -10,7 +10,7 @@ import { useConversations } from '../../Contexts/ConversationsProvider';
 import { useActiveConversationId } from '../../Contexts/ActiveConversationIdProvider';
 import { useSocket } from '../../Contexts/SocketProvider';
 
-function Conversation() {
+function Conversation({ toggleSidebar }) {
 
     const { contacts } = useContacts();
     const { onlineContact } = useOnlineContact();
@@ -25,7 +25,7 @@ function Conversation() {
 
     useEffect(() => 
     {
-        if( lastMessageRef.current )
+        if( lastMessageRef.current && !toggleSidebar )
         {
             lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
         }

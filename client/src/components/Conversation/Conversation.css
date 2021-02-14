@@ -18,12 +18,13 @@
 .conversation .title h2
 {
     margin: 0;
+    align-self: center;
 }
 
 .conversation .title span
 {
     margin: 0 1rem;
-    align-self: flex-end;
+    align-self: center;
 }
 
 .conversation .title, .conversation .add-message
@@ -84,4 +85,13 @@
 {
     background-color: var(--active-color);
     align-self: flex-end;
+}
+
+
+@media screen and (max-width: 600px) 
+{
+    .conversation
+    {
+        height: 100%;
+    }
 }

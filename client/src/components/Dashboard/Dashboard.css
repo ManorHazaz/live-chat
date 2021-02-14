@@ -29,6 +29,37 @@
     color: var(--secondary-color);
 }
 
+.show-sidebar
+{
+    display: none;
+    position: absolute;
+    padding: 0.5rem;
+    top: 1%;
+    right: 1%;
+    background-color: var(--active-color);
+    border: 2px solid var(--secondary-color);
+    justify-self: center;
+    justify-content: center;
+    border-radius: 100%;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 600px) 
+{
+    .dashboard
+    {
+        width: 100vw;
+        height: 100vh;
+        display: block;
+    }
+
+    .show-sidebar
+    {
+        display: flex;
+    }
+}
+
 /* The typing effect */
 @keyframes typing 
 {
