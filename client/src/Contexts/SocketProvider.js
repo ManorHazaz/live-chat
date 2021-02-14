@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 
 const SocketContext = React.createContext();
 
-const socket = io('http://localhost:5000', {transports: ['websocket']});
+const socket = io( process.env.REACT_APP_SOCKET_SERVER || window.location.host );
 
 export function useSocket() 
 {
