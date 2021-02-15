@@ -25,11 +25,16 @@ function Conversation({ toggleSidebar }) {
 
     useEffect(() => 
     {
-        if( lastMessageRef.current && !toggleSidebar )
+        if( lastMessageRef.current && window.innerWidth > 600  )
         {
             lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
         }
-    });
+        else if( lastMessageRef.current && !toggleSidebar )
+        {
+            lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+         
+    },[ lastMessageRef.current ]);
 
     // get the title from participents in conversation
     function conversationTitle()
@@ -76,7 +81,7 @@ function Conversation({ toggleSidebar }) {
             <div className='messages'>
                 { activeConversation.messages.map(( message, index ) =>
                     {
-                        const lastMessage = activeConversation.messages.length - 1 === index;
+                        const lastMessage = ( activeConversation.messages.length - 1 ) === index;
 
                         return message.from.id === onlineContact.id
                         ? <Message key={ index } reference={ lastMessage ? lastMessageRef : null } type={'sent'} message={ message } />
