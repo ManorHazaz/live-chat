@@ -90,7 +90,7 @@ function Conversation({ toggleSidebar }) {
                 )}
             </div>
             <form className='add-message' onSubmit={ sendMessage } >
-                <input type='text' ref={ newMessageContentRef } className='text-input' placeholder='new message'/>
+                <input type='text' autoFocus ref={ newMessageContentRef } className='text-input' placeholder='New Message'/>
                 <input type='submit' className='btn' value='Send'/>
             </form>
         </div>

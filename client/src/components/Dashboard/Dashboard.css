@@ -50,8 +50,16 @@
     .dashboard
     {
         width: 100vw;
-        height: 100vh;
+        height: 100%;
         display: block;
+    }
+
+    .welcome-msg
+    {
+        width: 100%;
+        transform: translateY(-50%);
+        margin-top: 50vh;
+        text-align: center;
     }
 
     .show-sidebar

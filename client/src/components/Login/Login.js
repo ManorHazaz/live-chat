@@ -50,7 +50,7 @@ function Login() {
         <form className='login' onSubmit={ login } >
             <h1> Live Chat </h1>
 		
-			<input type='text' ref={ contactRef } className='text-input' placeholder='Name' />
+			<input type='text' autoFocus ref={ contactRef } className='text-input' placeholder='Name' />
 			<input type='submit' className='btn' value='Enter' />
 		</form>
     )
