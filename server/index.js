@@ -2,21 +2,20 @@ const express = require( 'express' );
 const io = require( 'socket.io' )();
 const PORT = process.env.PORT || 5000;
 
-// init the express server
+// initial express server
 const app = express();
 
-// serve static assets
+// static assets
 app.use( express.static( './public' ) );
 
-// listen to incoming HTTP connections
-const server = app.listen( PORT, () => {
-
+// listen
+const server = app.listen( PORT, () => 
+{
     console.log( `Express server is running on port ${ PORT }...` );
-
 });
 
 
-// attach the socket.io server to the express server
+// attach the socket server to the express server
 io.listen( server );
 
 // handle contacts data
