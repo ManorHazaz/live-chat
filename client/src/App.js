@@ -17,53 +17,70 @@ function App() {
 	const { setContacts, createContact, loginContact, logoutContact } = useContacts();
 	const { setConversations, createConversation, addMessage } = useConversations();
 	const { socket } = useSocket();
-	
-	if( onlineContact )
-	{
-		window.addEventListener( 'visibilitychange', () => {
-			socket.emit( 'logout-contact', onlineContact.id );
-			logoutContact( onlineContact.id );
-		});
-	}
 
-		useEffect( () => {
+	useEffect( () => {
 
-			// get contacts from server
-			socket.on( 'get-contacts', ( contacts ) => {
-				setContacts( contacts );
-			} );
+		if( onlineContact != null )
+		{
+			window.addEventListener( 'visibilitychange', () => {
 
-			// listen and get new contact
-			socket.on('created-contact', createContact );
+				// handle contact offline
+				if( document.visibilityState === 'hidden' )
+				{
+					socket.emit( 'logout-contact', onlineContact.id );
+					logoutContact( onlineContact.id );
+				}
 
-			// listen and get conversations
-			socket.on( 'get-conversations', ( conversations ) => {
-				setConversations( conversations );
-			} );
+				// handle contact online
+				else if( document.visibilityState === 'visible' )
+				{
+					socket.emit( 'login-contact', onlineContact.id );
+					loginContact( onlineContact.id );
+				}
+			
+			});
+		}
+	}, [ onlineContact ] );
 
-			// listen and get new conversation
-			socket.on('created-conversation', createConversation );
 
-			// listen and get new message
-			socket.on('receive-message', ( data ) => {
-				addMessage( data.conversationID, data.newMessage );
-			})
+	useEffect( () => {
 
-			// listen and get new message
-			socket.on('loggedin-contact', ( contacId ) => {
-				loginContact( contacId );
-			})
+		// get contacts from server
+		socket.on( 'get-contacts', ( contacts ) => {
+			setContacts( contacts );
+		} );
 
-			// listen and get new message
-			socket.on('loggedout-contact', ( contacId ) => {
-				logoutContact( contacId );
-			})
+		// listen and get new contact
+		socket.on('created-contact', createContact );
 
-			// close connection on unmount
-			return () => {
-				socket.disconnect()
-			};
-		}, [] );
+		// listen and get conversations
+		socket.on( 'get-conversations', ( conversations ) => {
+			setConversations( conversations );
+		} );
+
+		// listen and get new conversation
+		socket.on('created-conversation', createConversation );
+
+		// listen and get new message
+		socket.on('receive-message', ( data ) => {
+			addMessage( data.conversationID, data.newMessage );
+		})
+
+		// listen and get new message
+		socket.on('loggedin-contact', ( contacId ) => {
+			loginContact( contacId );
+		})
+
+		// listen and get new message
+		socket.on('loggedout-contact', ( contacId ) => {
+			logoutContact( contacId );
+		})
+
+		// close connection on unmount
+		return () => {
+			socket.disconnect()
+		};
+	}, [] );
 
 	return (
 		<div className="App">
