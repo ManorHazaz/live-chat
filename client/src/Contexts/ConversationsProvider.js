@@ -23,16 +23,41 @@ export function ConversationsProvider({ children }) {
     function addMessage( conversationId, newMessage )
 	{
         setConversations(( prev ) =>
-            prev.map(({ id, messages, ...rest }) => 
+            prev.map(({ id, messages, participents }) => 
             ({
-                ...rest, id,
-                messages: id == conversationId ? [ ...messages, newMessage ] : messages
+                id,
+                messages: id == conversationId ? ([ ...messages, newMessage ]) : messages,
+                participents: id == conversationId 
+                ? participents.map(({ id, unreadMessagesCounter }) => 
+                ({
+                    id,
+                    unreadMessagesCounter: id == newMessage.from ? unreadMessagesCounter + 1 :unreadMessagesCounter
+                }))
+                : participents
             }))
         );
 	}
 
+    // contact read all messages
+    function readAll( conversationId, contactId )
+    {
+        setConversations(( prev ) =>
+            prev.map(({ id, participents, ...rest }) => 
+            ({
+                ...rest, id,
+                participents: id == conversationId 
+                ? participents.map(({ id, unreadMessagesCounter }) => 
+                ({
+                    id,
+                    unreadMessagesCounter: id != contactId ? 0 :unreadMessagesCounter
+                }))
+                : participents
+            }))
+        );
+    }
+
     return (
-        <ConversationsContext.Provider value={{ conversations, setConversations, createConversation, addMessage }}>
+        <ConversationsContext.Provider value={{ conversations, setConversations, createConversation, addMessage, readAll }}>
             { children }
         </ConversationsContext.Provider>
     )

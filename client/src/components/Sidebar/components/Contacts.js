@@ -12,42 +12,82 @@ function Contacts() {
 
     const { contacts } = useContacts();
     const { onlineContact } = useOnlineContact();
-    const { conversations, createConversation } = useConversations();
+    const { conversations, createConversation, readAll } = useConversations();
     const { activeConversationId, setActiveConversationId } = useActiveConversationId();
     const { socket } = useSocket();
 
     const [ lastContactId, setLastContactId ] = useState(1);
+
+    function findConversation( contactId )
+    {
+        const conversation = conversations.find( c => 
+        {
+            if(c.participents[0].id == onlineContact.id && c.participents[1].id == contactId )
+            {
+                return true;
+            }
+
+            if(c.participents[1].id == onlineContact.id && c.participents[0].id == contactId )
+            {
+                return true;
+            }
+            return false;
+        });
+
+        return conversation;
+    }
     
     // set activeConversationId and create conversation if needed
     function activateConversation( contactId )
     {
-		const conversation = conversations.find( conversation => conversation.participents.includes( onlineContact.id ) && conversation.participents.includes( contactId ) );
+        let conversation = findConversation( contactId );
 
-		if( conversation )
+		if( !conversation )
 		{
-            setActiveConversationId( conversation.id );
-		}
-		else
-		{
-            const newConversation = { id: generateId(), participents: [ onlineContact.id , contactId ], messages: [] };
-            socket.emit( 'create-conversation', newConversation );
-            createConversation( newConversation );
-            setActiveConversationId( newConversation.id );
+            conversation = { 
+                id: generateId(), 
+                participents: 
+                [
+                    { id: onlineContact.id, unreadMessagesCounter: 0 },
+                    { id: contactId, unreadMessagesCounter: 0 }
+                ], 
+                messages: [] };
+                
+            socket.emit( 'create-conversation', conversation );
+            createConversation( conversation );
 		}
 
+        setActiveConversationId( conversation.id );
         setLastContactId( contactId );
+        readAll( activeConversationId, onlineContact.id );
     }
 
     return (
         <div className='contacts'>
             { contacts.map( contact =>
-                (
-                    contact.id !== onlineContact.id &&
+                {
+                    const conversation = findConversation( contact.id );
+                    let messagesToRead;
+
+                    if( conversation )
+                    {
+                        if( conversation.participents[0].id == contact.id )
+                        {
+                            messagesToRead = conversation.participents[0].unreadMessagesCounter;
+                        }
+                        else
+                        {
+                            messagesToRead = conversation.participents[1].unreadMessagesCounter;
+                        }
+                    }
+                    
+                    return contact.id !== onlineContact.id &&
                     <div key={ contact.id } className={`contact ${ contact.id == lastContactId ? 'active' :'' }`} onClick={ () => activateConversation( contact.id ) } >
                         { contact.contactName }
+                        <span className={`messages-to-read ${ messagesToRead ? messagesToRead > 0 && 'display' :'' }`}>{ messagesToRead ? messagesToRead > 0 && messagesToRead : '' }</span>
                         <span className={ `online online-${ contact.isOnline }` } ></span>
                     </div>
-                )
+                }
             )}
         </div>
     )

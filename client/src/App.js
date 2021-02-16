@@ -63,7 +63,7 @@ function App() {
 
 		// listen and get new message
 		socket.on('receive-message', ( data ) => {
-			addMessage( data.conversationID, data.newMessage );
+			addMessage( data.conversationId, data.newMessage );
 		})
 
 		// listen and get new message

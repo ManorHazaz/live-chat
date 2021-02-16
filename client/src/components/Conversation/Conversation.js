@@ -41,13 +41,13 @@ function Conversation({ toggleSidebar }) {
     {
         var id;
         
-        if( activeConversation.participents[0] === onlineContact.id )
+        if( activeConversation.participents[0].id === onlineContact.id )
         {
-            id = activeConversation.participents[1];
+            id = activeConversation.participents[1].id;
         }
         else
         {
-            id = activeConversation.participents[0];
+            id = activeConversation.participents[0].id;
         }
 
         const  index = contacts.findIndex( contact => contact.id === id );
@@ -69,8 +69,8 @@ function Conversation({ toggleSidebar }) {
             return;
         }
 
-        const newMessage = { from: onlineContact, content: newMessageContentRef.current.value, time: Date.now() };
-        socket.emit( 'add-message', { conversationID: activeConversation.id ,newMessage: newMessage } );
+        const newMessage = { from: onlineContact.id, content: newMessageContentRef.current.value, time: Date.now() };
+        socket.emit( 'add-message', { conversationId: activeConversation.id ,newMessage: newMessage } );
         addMessage( activeConversation.id , newMessage );
         newMessageContentRef.current.value = '';
     }
@@ -82,10 +82,8 @@ function Conversation({ toggleSidebar }) {
                 { activeConversation.messages.map(( message, index ) =>
                     {
                         const lastMessage = ( activeConversation.messages.length - 1 ) === index;
-
-                        return message.from.id === onlineContact.id
-                        ? <Message key={ index } reference={ lastMessage ? lastMessageRef : null } type={'sent'} message={ message } />
-                        : <Message key={ index } reference={ lastMessage ? lastMessageRef : null } type={'received'} message={ message } />
+                        const typeOfMessage = message.from == onlineContact.id ? 'sent' : 'received';
+                        return <Message key={ index } reference={ lastMessage ? lastMessageRef : null } type={ typeOfMessage } message={ message } />
                     }
                 )}
             </div>
