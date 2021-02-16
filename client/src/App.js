@@ -1,6 +1,7 @@
 import './App.css';
+import soundEffect from './static/sound-effect/incoming-message.wav';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Login } from './components/Login';
 import { Dashboard } from './components/Dashboard';
@@ -17,6 +18,8 @@ function App() {
 	const { setContacts, createContact, loginContact, logoutContact } = useContacts();
 	const { setConversations, createConversation, addMessage } = useConversations();
 	const { socket } = useSocket();
+
+	const audio = new Audio ( soundEffect );
 
 	useEffect( () => {
 
@@ -42,6 +45,14 @@ function App() {
 		}
 	}, [ onlineContact ] );
 
+	function newMessageSoundEffect()
+	{
+		if( document.visibilityState === 'hidden' )
+		{
+			audio.play();
+		}
+	}
+
 
 	useEffect( () => {
 
@@ -64,6 +75,7 @@ function App() {
 		// listen and get new message
 		socket.on('receive-message', ( data ) => {
 			addMessage( data.conversationId, data.newMessage );
+			newMessageSoundEffect();
 		})
 
 		// listen and get new message
