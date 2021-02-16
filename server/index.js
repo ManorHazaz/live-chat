@@ -1,6 +1,7 @@
 const express = require( 'express' );
 const io = require( 'socket.io' )();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
+// const PORT = process.env.PORT || 5000;
 
 // initial express server
 const app = express();
@@ -59,12 +60,20 @@ io.on('connection', socket =>
         socket.broadcast.emit('created-conversation', ( conversation ));
     });
 
+    // Add new message and increase unreadMessagesCounter
     socket.on( 'add-message', ( data ) => {
-        socket.broadcast.emit('receive-message', { conversationID: data.conversationID ,newMessage: data.newMessage });
-        conversations.map(({ id, messages, ...rest }) => 
+        socket.broadcast.emit('receive-message', { conversationId: data.conversationId ,newMessage: data.newMessage });
+        conversations.map(({ id, messages, participents }) => 
         ({
-            ...rest, id,
-            messages: id == data.conversationID ? messages.push(data.newMessage) : messages
+            id,
+            messages: id == data.conversationId ? messages.push( data.newMessage ) : messages,
+            participents: id == data.conversationId 
+            ? participents.map(({ id, unreadMessagesCounter }) => 
+            ({
+                id,
+                unreadMessagesCounter: id != data.newMessage.from.id ? unreadMessagesCounter + 1 :unreadMessagesCounter
+            }))
+            : participents
         }));
     });
 });
