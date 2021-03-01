@@ -34,8 +34,8 @@
     display: none;
     position: absolute;
     padding: 0.5rem;
-    top: 1%;
-    right: 1%;
+    top: 2%;
+    right: 2%;
     background-color: var(--active-color);
     border: 2px solid var(--secondary-color);
     justify-self: center;
@@ -43,6 +43,7 @@
     border-radius: 100%;
     font-weight: bolder;
     cursor: pointer;
+    font-size: 2rem;
 }
 
 @media screen and (max-width: 600px) 

@@ -20,3 +20,16 @@
     font-size: 3rem;
     margin-top: 0;
 }
+
+@media screen and (max-width: 600px) 
+{
+    .login
+    {
+        height: 85vh;
+    }
+
+    .login .text-input
+    {
+        font-size: 1.5rem;
+    }
+}
